@@ -5,18 +5,21 @@
   
 
   
-  <title>LH&#39;s Blog</title>
+  <title>org.springframework.core.env概述（未完） | LH&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习之路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LH&#39;s Blog">
-<meta property="og:url" content="https://lh2227.github.io/blog/index.html">
+  <meta name="description" content="env包主要管理程序运行时的环境，比如获取系统环境，指定运行的剖面，处理命令行参数，解析”${}”占位符等形式的参数等。 我把这个包分为了两大块，一块是抽象类PropertySource以及它下面的各个类，这部分用来承载各种属性。另一块则是ConfigurablePropertyResovler、Enviroment接口为主，用来解析和管理属性。    PropertyResolver:用于解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="org.springframework.core.env概述（未完）">
+<meta property="og:url" content="https://lh2227.github.io/blog/2018/03/14/org-springframework-core-env概述/index.html">
 <meta property="og:site_name" content="LH&#39;s Blog">
-<meta property="og:description" content="学习之路">
+<meta property="og:description" content="env包主要管理程序运行时的环境，比如获取系统环境，指定运行的剖面，处理命令行参数，解析”${}”占位符等形式的参数等。 我把这个包分为了两大块，一块是抽象类PropertySource以及它下面的各个类，这部分用来承载各种属性。另一块则是ConfigurablePropertyResovler、Enviroment接口为主，用来解析和管理属性。    PropertyResolver:用于解析">
 <meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://lh2227.github.io/blog/2018/03/14/org-springframework-core-env概述/org.springframework.core.env.jpg">
+<meta property="og:updated_time" content="2018-03-16T01:40:35.153Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LH&#39;s Blog">
-<meta name="twitter:description" content="学习之路">
+<meta name="twitter:title" content="org.springframework.core.env概述（未完）">
+<meta name="twitter:description" content="env包主要管理程序运行时的环境，比如获取系统环境，指定运行的剖面，处理命令行参数，解析”${}”占位符等形式的参数等。 我把这个包分为了两大块，一块是抽象类PropertySource以及它下面的各个类，这部分用来承载各种属性。另一块则是ConfigurablePropertyResovler、Enviroment接口为主，用来解析和管理属性。    PropertyResolver:用于解析">
+<meta name="twitter:image" content="https://lh2227.github.io/blog/2018/03/14/org-springframework-core-env概述/org.springframework.core.env.jpg">
   
     <link rel="alternate" href="/blog/atom.xml" title="LH&#39;s Blog" type="application/atom+xml">
   
@@ -67,54 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2018/03/16/hello-world/" class="article-date">
-  <time datetime="2018-03-16T01:31:20.692Z" itemprop="datePublished">2018-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/03/16/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://lh2227.github.io/blog/2018/03/16/hello-world/" data-id="cjeta1gn20001cohamhwfhbnw" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-org-springframework-core-env概述" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-org-springframework-core-env概述" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2018/03/14/org-springframework-core-env概述/" class="article-date">
   <time datetime="2018-03-14T02:42:24.000Z" itemprop="datePublished">2018-03-14</time>
@@ -127,8 +83,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/03/14/org-springframework-core-env概述/">org.springframework.core.env概述（未完）</a>
+    <h1 class="article-title" itemprop="name">
+      org.springframework.core.env概述（未完）
     </h1>
   
 
@@ -185,11 +141,23 @@
     </footer>
   </div>
   
-</article>
-
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2018/03/16/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
 
   
-
+</article>
 
 </section>
         
